@@ -180,7 +180,7 @@ def clear_pic():
 def add_line(x1,y1,z1,x2,y2,z2):
     global edge_mat
     length = len(edge_mat)
-    points = [[x1,y1,z1,1],[x2,y2,z2,1]]
+    points = [[x1,0 - y1,z1,1],[x2,0 - y2,z2,1]]
     for x in range(2):
         edge_mat.append(points[x])
     print edge_mat
@@ -196,9 +196,9 @@ def transform(x1,y1,z1):
     global trans_mat
     new_mat = [ [ 0 for x in range(4) ] for y in range(4) ]
     new_mat = make_iden(new_mat)
-    values = [x1,y1,z1,1]
+    values = [0 - x1,0 - y1,z1,1]
     for x in range(4):
-        new_mat[x][4] = values[x]
+        new_mat[x][3] = values[x]
     trans_mat = mult(new_mat,trans_mat)
 
 def scale(x1,y1,z1):
