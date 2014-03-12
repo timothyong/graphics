@@ -47,8 +47,8 @@ def parse():
             rotate_y(int(parts[1]))
         elif parts[0] == "rotate-z":
             rotate_z(int(parts[1]))
-#        elif parts[0] == "transform":
-#            edge_mat = mult(trans_mat, edge_mat)
+        elif parts[0] == "transform":
+            edge_mat = mult(trans_mat, edge_mat)
         elif parts[0] == "render-parallel":
             render_parallel()
         elif parts[0] == "clear-edges":
@@ -150,15 +150,17 @@ def render_parallel():
     new_mat = edge_mat
     print new_mat
     print edge_mat
-    for x in range(len(edge_mat[0])):
+    for x in range(len(edge_mat)):
         new_mat[x][0] = (edge_mat[x][0] + wmove_pix) * wscale
         new_mat[x][1] = (edge_mat[x][1] + hmove_pix) * hscale
     print new_mat
-    for x in range(len(new_mat[0]) / 2):
+    print wmove_pix, hmove_pix, wscale, hscale
+    for x in range(len(new_mat) / 2):
         draw_line(new_mat[2*x][0], new_mat[2*x][1], new_mat[2*x+1][0], new_mat[2*x+1][1])
 
 def world_to_render(xleft, ybottom, xright, ytop, width, height):
     global pic
+    global wmove_pix, hmove_pix, wscale, hscale
     pic = [["0 0 0 " for y in range(height)] for x in range(width)]
     max_width = width
     max_height= height
@@ -239,13 +241,13 @@ def rotate_z(rz):
     trans_mat = mult(new_mat,trans_mat)
 
 def mult(mat,mat2):
-    new_mat = [ [ 0 for x in range(4) ] for y in range(len(mat2[0])) ]
-    for row in range(4):
-        for col in range(len(mat2[0])):
-            new_mat[row][col] = (mat[row][0]*mat2[0][col] + 
-                                 mat[row][1]*mat2[1][col] + 
-                                 mat[row][2]*mat2[2][col] + 
-                                 mat[row][3]*mat2[3][col])
+    new_mat = [ [ 0 for x in range(4) ] for y in range(len(mat2)) ]
+    for col in range(len(mat2)):
+        for row in range(4):
+            new_mat[col][row] = (mat[0][row]*mat2[col][0] + 
+                                 mat[1][row]*mat2[col][1] + 
+                                 mat[2][row]*mat2[col][2] + 
+                                 mat[3][row]*mat2[col][3])
     return new_mat
 
 parse()
