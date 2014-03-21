@@ -220,21 +220,24 @@ def sphere(r,cx,cy,cz):
         semi.append([cx + r * math.cos(math.radians(x * 10)),
                      cy + r * math.sin(math.radians(x * 10)),
                      cz,1])
+
     for x in range(36):
         long_points.append(semi)
         semi = mult([[1,0,0,0],
-                     [0,0-math.cos(math.radians(10*x)),0-math.sin(math.radians(10*x)),0],
-                     [math.sin(math.radians(10*x)),0-math.cos(math.radians(10*x)),0, 0],
+                     [0,math.cos(math.radians(0-10*x)),math.sin(math.radians(0-10*x)),0],
+                     [0-math.sin(math.radians(0-10*x)),math.cos(math.radians(0-10*x)),0, 0],
                      [0,0,0,1]], semi)
-    for x in range(36):
-        for y in range(18):
+
+    for x in range(35):
+        for y in range(17):
             add_line(long_points[x][y][0],long_points[x][y][1],long_points[x][y][2],
                      long_points[x][(y+1)%18][0],long_points[x][(y+1)%18][1],long_points[x][(y+1)%18][2])
+'''
     for x in range(18):
         for y in range(36):
             add_line(long_points[y][x][0],long_points[y][x][1],long_points[y][x][2],
                      long_points[(y+1)%36][x][0],long_points[(y+1)%36][x][1],long_points[(y+1)%36][x][2])
-
+'''
 def add_line(x1,y1,z1,x2,y2,z2):
     global edge_mat
     length = len(edge_mat)
