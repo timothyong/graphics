@@ -20,10 +20,12 @@ def parser():
         for x in range(len(vars)):
             f.seek(0)
             line = f.readline()
-            try:
-                line.replace(vars[x], vars[2] + (number * vars[3] / frames))
-            except: 
-                pass
+            if line.find(vars[x][1]):
+                if number < vars[x][5] and number > vars[x][4]:
+                    try:
+                        line.replace(vars[x][1], vars[x][2] + (number * vars[x][3] / frames))
+                    except: 
+                        pass
         parse()
         number = number + 1
 
@@ -141,7 +143,7 @@ def render_perspective_cyclops(ex,ey,ez):
         dot = n[0]*s[0]+n[1]*s[1]+n[2]*s[2]
         if dot < 0:
             draw_line(trig_mat[x][0],trig_mat[x][1],trig_mat[x][2],
-                            trig_mat[x+1][0],trig_mat[x+1][1],trig_mat[x+1][2], "0 0 0 ")
+                      trig_mat[x+1][0],trig_mat[x+1][1],trig_mat[x+1][2], "0 0 0 ")
             draw_line(trig_mat[x+1][0],trig_mat[x+1][1],trig_mat[x+1][2],
                       trig_mat[x+2][0],trig_mat[x+2][1],trig_mat[x+2][2], "0 0 0 ")
             draw_line(trig_mat[x+2][0],trig_mat[x+2][1],trig_mat[x+2][2],
